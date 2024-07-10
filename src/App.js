@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 function App() {
   const [squareValues, setSquareValues] = useState(Array(81).fill(" "));
   const [numberBrushValue, setNumberBrushValue] = useState("9");
+  const [status, setStatus] = useState("");
   const swipl = useRef();
 
   const preparePuzzleInput = (squareValues) => {
@@ -53,10 +54,16 @@ function App() {
   const solvePuzzle = async () => {
     const puzzleInput = preparePuzzleInput(squareValues);
     const query = 'P = ' + puzzleInput + ', solve(P).';
-    const solution = swipl.current.prolog.query(query, {Puzzle: puzzleInput}).once().P;
+    console.log(query);
+    const solution = swipl.current.prolog.query(query, {Puzzle: puzzleInput}).once();
 
-    const newSquareValues = solution.flat()
-    setSquareValues(newSquareValues);
+    if (typeof solution.P === 'undefined') {
+      setStatus("No solution.");
+    } else {
+      const newSquareValues = solution.P.flat()
+      setSquareValues(newSquareValues);
+      setStatus("");
+    }
   };
 
   const resetPuzzle = async () => {
@@ -68,13 +75,14 @@ function App() {
     <div className="App">
       <header className="App-header">
         <div className="Puzzle-grid">
-          {[...Array(squareValues.length).keys()].map(x => <div className="Puzzle-cell" onClick={() => onClickPuzzleCell(x)}>{squareValues[x]}</div>)}
+          {[...Array(squareValues.length).keys()].map(x => <div className="Puzzle-cell" key={x} onClick={() => onClickPuzzleCell(x)}>{squareValues[x]}</div>)}
         </div>
         <div className="Number-radios">
           {numberRadios}
         </div>
         <button type="button" onClick={solvePuzzle}>Solve!</button>
         <button type="button" onClick={resetPuzzle}>Reset</button>
+        <div className="solverStatus">{status}</div>
       </header>
     </div>
   );

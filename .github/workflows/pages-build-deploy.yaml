@@ -1,0 +1,33 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build App
+        id: build
+        run: "npm run build"
+      - name: Upload Pages Artifact
+        id: upload
+        uses: actions/upload-pages-artifact@v3.0.1
+        with:
+          path: "/build"
+
+  # Github Pages docs recommends this Action gets it's own job
+  deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

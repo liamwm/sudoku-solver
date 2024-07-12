@@ -12,7 +12,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
       - name: Build App
-        run: "npm init && npm run build"
+        run: "npm ci && npm run build"
       - name: Upload Pages Artifact
         id: upload
         uses: actions/upload-pages-artifact@v3.0.1

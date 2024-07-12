@@ -8,14 +8,15 @@ jobs:
     steps: 
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
       - name: Build App
-        id: build
         run: "npm run build"
       - name: Upload Pages Artifact
         id: upload
         uses: actions/upload-pages-artifact@v3.0.1
         with:
-          path: "/build"
+          path: "build/"
 
   # Github Pages docs recommends this Action gets it's own job
   deploy:

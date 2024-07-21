@@ -1,4 +1,4 @@
-import './App.css';
+import './style.css';
 import { useEffect, useState, useRef } from 'react';
 
 function App() {
@@ -73,7 +73,6 @@ function App() {
  
   return (
     <div className="App">
-      <header className="App-header">
         <div className="Puzzle-grid">
           {[...Array(squareValues.length).keys()].map(x => <div className="Puzzle-cell" key={x} onClick={() => onClickPuzzleCell(x)}>{squareValues[x]}</div>)}
         </div>
@@ -83,7 +82,6 @@ function App() {
         <button type="button" onClick={solvePuzzle}>Solve!</button>
         <button type="button" onClick={resetPuzzle}>Reset</button>
         <div className="solverStatus">{status}</div>
-      </header>
     </div>
   );
 }

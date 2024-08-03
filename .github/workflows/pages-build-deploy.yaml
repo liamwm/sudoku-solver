@@ -19,7 +19,7 @@ jobs:
         with:
           path: "build/"
 
-  # Github Pages docs recommends this Action gets it's own job
+  # Github Pages docs recommends this Action gets its own job
   deploy:
     needs: build
     permissions:

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "npx webpack serve --config webpack.dev.js",
-    "build": "npx webpack --config webpack.prod.js && cp -r dist/assets build && tar -c -z -f build.tar.gz build"
+    "build": "npx webpack --config webpack.prod.js && cp -r dist/assets build && cp dist/index.html build && tar -c -z -f build.tar.gz build"
   },
   "dependencies": {
     "react": "^18.3.1",

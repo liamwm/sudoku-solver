@@ -28,7 +28,7 @@ function App() {
     const loadSwipl = async () => {
       const { SWIPL } = await import("https://SWI-Prolog.github.io/npm-swipl-wasm/latest/dynamic-import.js");
       swipl.current = await SWIPL({ arguments: ['-q'] });
-      await swipl.current.prolog.consult("swipl/sudoku.pl");
+      await swipl.current.prolog.consult("assets/swipl/sudoku.pl");
       console.log('SWIPL loaded.');
     };
 
@@ -82,7 +82,7 @@ function App() {
               <input type="radio" id={x} name="editor-palette" className="hidden peer" onChange={(e) => onChangeNumberRadio(e, x)}/>
               <label className="inline-flex bg-red-300 hover:bg-red-400 peer-checked:bg-red-500" htmlFor={x}>
                 <div className="size-16 place-content-center">
-                  {x === "Erase" ? <img src="eraser.svg" className="p-5"/> : <p className="text-center">{x}</p>}
+                  {x === "Erase" ? <img src="assets/eraser.svg" className="p-5"/> : <p className="text-center">{x}</p>}
                 </div>
               </label>
             </div>

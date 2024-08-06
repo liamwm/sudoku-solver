@@ -1,3 +1,4 @@
+import { render } from 'react-dom';
 import './style.css';
 import { useEffect, useState, useRef } from 'react';
 
@@ -66,16 +67,37 @@ function App() {
     const newSquareValues = Array(81).fill(' ');
     setSquareValues(newSquareValues);
   }
+
+  const renderSudokuPen = (penNumber) => {
+    const penX = penNumber % 3;
+    const penY = (penNumber - penX) / 3;
+
+    let indices = [];
+    for (let i = 0; i < 3; i++) {
+      const row = penY * 3 + i;
+      for (let j = 0; j < 3; j++) {
+        const column = penX * 3 + j;
+        indices.push(row * 9 + column);
+      }
+    }
+
+    return (
+      <div className="grid grid-cols-3 size-fit gap-0.5 bg-slate-300" key={penNumber}>
+        {indices.map(x => {
+          return (<div className="size-10 bg-slate-100 hover:bg-sky-200 place-content-center" key={x} onClick={() => onClickPuzzleCell(x)}>
+            <p className="text-center">{squareValues[x]}</p>
+          </div>);
+        })}
+      </div>
+    );
+  }
  
   return (
     <div className="App">
-        <div className="grid grid-cols-9 size-fit gap-0.5">
-          {[...Array(squareValues.length).keys()].map(x => 
-            <div className="size-10 bg-sky-500 hover:bg-sky-700 place-content-center" key={x} onClick={() => onClickPuzzleCell(x)}>
-              <p className="text-center">{squareValues[x]}</p>
-            </div>
-          )}
+        <div className="grid grid-cols-3 size-fit gap-1 bg-slate-500 border-solid border-gray-500 border-2">
+          {[...Array(9).keys()].map(x => renderSudokuPen(x))}
         </div>
+
         <div className="grid grid-cols-5 gap-0.5 size-fit border-solid border-gray-300 border-2 rounded-lg overflow-hidden">
           {paletteOptions.map(x =>
             <div className="size-16 bg-red-300 hover:bg-red-400 has-[:checked]:bg-red-500" key={x}>
